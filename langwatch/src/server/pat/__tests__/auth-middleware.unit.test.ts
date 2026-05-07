@@ -61,6 +61,7 @@ describe("extractCredentials", () => {
       expect(extractCredentials(c2)).toBeNull();
     });
 
+    /** @scenario "Authorization header from a proxy does not poison X-Auth-Token fallback" */
     it("falls back to X-Auth-Token when Basic auth is malformed (no colon)", () => {
       // A corporate proxy may add Authorization: Basic <some-base64> for its
       // own upstream auth. That MUST NOT poison the customer's legitimate
@@ -76,7 +77,6 @@ describe("extractCredentials", () => {
       });
     });
 
-    /** @scenario "Authorization header from a proxy does not poison X-Auth-Token fallback" */
     it("falls back to X-Auth-Token when Basic auth has empty token", () => {
       const emptyToken = Buffer.from("projectId:").toString("base64");
       const c = mockGetHeader({
