@@ -3,9 +3,9 @@ Feature: Custom prompt tag management
   I want to create, list, and delete custom prompt tags
   So that my team can organize prompt versions beyond the default labels
 
-  # Parity status: 7 of 21 scenarios bound to existing tests in
+  # Parity status: 8 of 21 scenarios bound to existing tests in
   # langwatch/src/server/prompt-config/__tests__/prompt-tag.service.unit.test.ts.
-  # The remaining 14 @unimplemented scenarios are integration/e2e tests that
+  # The remaining 13 @unimplemented scenarios are integration/e2e tests that
   # require Postgres + API harness — deferred per #3458.
 
   Background:
