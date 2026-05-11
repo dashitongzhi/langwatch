@@ -16,8 +16,16 @@ import { isGrowthEventsPrice, isGrowthSeatEventPlan, isGrowthSeatPrice } from ".
 import { SubscriptionRecordNotFoundError } from "../errors";
 import { traced } from "../../../src/server/app-layer/tracing";
 import { fireSubscriptionSyncNurturing } from "../nurturing/hooks/subscriptionSync";
+import { TtlCache } from "../../../src/server/utils/ttlCache";
 
 const logger = createLogger("langwatch:billing:webhookService");
+
+const SUBSCRIPTION_CONFIRMED_COOLDOWN_MS = 5 * 60 * 1000;
+const subscriptionConfirmedCooldown = new TtlCache<true>(
+  SUBSCRIPTION_CONFIRMED_COOLDOWN_MS,
+  "ttlcache:billing:subscriptionConfirmed:",
+);
+export { subscriptionConfirmedCooldown };
 
 const VALID_CURRENCIES_FOR_CHECKOUT = new Set<string>(Object.values(Currency));
 const maskCustomerId = (id: string) => `${id.slice(0, 7)}...${id.slice(-4)}`;
@@ -713,12 +721,12 @@ export class EEWebhookService implements WebhookService {
       await this.clearTrialLicenseIfPresent(updatedSubscription, "subscription updated to active");
 
       if (shouldNotify) {
-        await getApp().notifications.sendSlackSubscriptionEvent({
-          type: "confirmed",
+        await this.sendConfirmedNotificationOnce({
+          subscriptionId: subscription.id,
           organizationId: updatedSubscription.organizationId,
           organizationName: updatedSubscription.organization.name,
           plan: updatedSubscription.plan,
-          subscriptionId: updatedSubscription.id,
+          dbSubscriptionId: updatedSubscription.id,
           startDate: updatedSubscription.startDate,
           maxMembers: updatedSubscription.maxMembers,
           maxMessagesPerMonth: updatedSubscription.maxMessagesPerMonth,
@@ -817,12 +825,12 @@ export class EEWebhookService implements WebhookService {
         }
       }
 
-      await getApp().notifications.sendSlackSubscriptionEvent({
-        type: "confirmed",
+      await this.sendConfirmedNotificationOnce({
+        subscriptionId,
         organizationId: updatedSubscription.organizationId,
         organizationName: updatedSubscription.organization.name,
         plan: updatedSubscription.plan,
-        subscriptionId: updatedSubscription.id,
+        dbSubscriptionId: updatedSubscription.id,
         startDate: updatedSubscription.startDate,
         maxMembers: updatedSubscription.maxMembers,
         maxMessagesPerMonth: updatedSubscription.maxMessagesPerMonth,
@@ -833,6 +841,46 @@ export class EEWebhookService implements WebhookService {
         hasSubscription: true,
       });
     }
+  }
+
+  private async sendConfirmedNotificationOnce({
+    subscriptionId,
+    organizationId,
+    organizationName,
+    plan,
+    dbSubscriptionId,
+    startDate,
+    maxMembers,
+    maxMessagesPerMonth,
+  }: {
+    subscriptionId: string;
+    organizationId: string;
+    organizationName: string;
+    plan: string;
+    dbSubscriptionId: string;
+    startDate: Date | null;
+    maxMembers: number | null;
+    maxMessagesPerMonth: number | null;
+  }): Promise<void> {
+    const claimed = await subscriptionConfirmedCooldown.claim(subscriptionId, true);
+    if (!claimed) {
+      logger.info(
+        { subscriptionId, organizationId },
+        "[stripeWebhook] Confirmed notification already sent for this subscription, deduplicating",
+      );
+      return;
+    }
+
+    await getApp().notifications.sendSlackSubscriptionEvent({
+      type: "confirmed",
+      organizationId,
+      organizationName,
+      plan,
+      subscriptionId: dbSubscriptionId,
+      startDate,
+      maxMembers,
+      maxMessagesPerMonth,
+    });
   }
 
   private async clearTrialLicenseIfPresent(
