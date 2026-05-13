@@ -10,7 +10,12 @@ import {
   PromptsError,
   type SyncAction,
 } from "@/client-sdk/services/prompts";
-import type { PromptsConfig, PromptsLock, SyncResult } from "../types";
+import type {
+  PromptsConfig,
+  PromptsLock,
+  RuntimeConfig,
+  SyncResult,
+} from "../types";
 import { FileManager } from "../utils/fileManager";
 import { ensureProjectInitialized } from "../utils/init";
 import { checkApiKey } from "../utils/apiKey";
@@ -144,6 +149,7 @@ export const pushPrompts = async ({
         const syncResult = await promptsApiService.sync({
           name: promptName,
           configData,
+          config: localConfig.config ?? {},
           localVersion: currentVersion,
           commitMessage: `Synced from local file: ${path.basename(filePath)}`,
         });
@@ -182,6 +188,10 @@ export const pushPrompts = async ({
                 },
                 ...(syncResult.conflictInfo.remoteConfigData.messages ?? []),
               ],
+              config:
+                (syncResult.conflictInfo.remoteConfigData as {
+                  config?: RuntimeConfig;
+                }).config ?? {},
             };
 
             const yamlContent = yaml.dump(remoteConfig, {

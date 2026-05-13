@@ -57,6 +57,7 @@ export type CreateLlmConfigParams = Omit<
 export interface LlmConfigWithLatestVersion extends LlmPromptConfig {
   latestVersion: LatestConfigVersionSchema & {
     author?: { name: string } | null;
+    runtimeConfig: Record<string, unknown>;
   };
   _count?: {
     copiedPrompts?: number;
@@ -129,9 +130,14 @@ export class LlmConfigRepository {
             throw new Error(`Prompt config ${config.id} has no versions.`);
           }
 
+          const rawVersion = config.versions[0]!;
           return {
             ...config,
-            latestVersion: parseLlmConfigVersion(config.versions[0]),
+            latestVersion: {
+              ...parseLlmConfigVersion(rawVersion),
+              runtimeConfig:
+                (rawVersion.runtimeConfig as Record<string, unknown>) ?? {},
+            },
           };
         } catch (error) {
           logger.error(
@@ -284,9 +290,14 @@ export class LlmConfigRepository {
     );
 
     try {
+      const rawVersion = config.versions[0]!;
       return {
         ...config,
-        latestVersion: parseLlmConfigVersion(config.versions[0]),
+        latestVersion: {
+          ...parseLlmConfigVersion(rawVersion),
+          runtimeConfig:
+            (rawVersion.runtimeConfig as Record<string, unknown>) ?? {},
+        },
       };
     } catch (error) {
       throw new Error(
@@ -456,6 +467,7 @@ export class LlmConfigRepository {
       "configId" | "projectId"
     > & {
       prompt?: string;
+      runtimeConfig?: Record<string, unknown>;
     };
   }): Promise<LlmConfigWithLatestVersion> {
     const { configData, versionData } = params;
@@ -522,6 +534,8 @@ export class LlmConfigRepository {
           ...newVersionData,
           version: 1,
           configData: newVersionData.configData as Prisma.InputJsonValue,
+          runtimeConfig:
+            (versionData?.runtimeConfig as Prisma.InputJsonValue) ?? {},
           id: this.versions.generateVersionId(),
           configId: newConfig.id,
           projectId: newConfig.projectId,
@@ -544,7 +558,11 @@ export class LlmConfigRepository {
 
       return {
         ...updatedConfig,
-        latestVersion: parseLlmConfigVersion(newVersion),
+        latestVersion: {
+          ...parseLlmConfigVersion(newVersion),
+          runtimeConfig:
+            (newVersion.runtimeConfig as Record<string, unknown>) ?? {},
+        },
       };
     });
   }
