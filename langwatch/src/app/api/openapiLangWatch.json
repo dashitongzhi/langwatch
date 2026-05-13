@@ -16522,6 +16522,10 @@
                             "outputs",
                             "model"
                           ]
+                        },
+                        "remoteConfig": {
+                          "type": "object",
+                          "additionalProperties": {}
                         }
                       },
                       "required": [
@@ -17040,6 +17044,10 @@
                       "outputs",
                       "model"
                     ]
+                  },
+                  "config": {
+                    "type": "object",
+                    "additionalProperties": {}
                   },
                   "localVersion": {
                     "type": "number",

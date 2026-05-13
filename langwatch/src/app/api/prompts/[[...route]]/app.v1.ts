@@ -781,6 +781,7 @@ app.post(
                     differences: z.array(z.string()),
                     remoteConfigData:
                       getLatestConfigVersionSchema().shape.configData,
+                    remoteConfig: z.record(z.string(), z.unknown()).optional(),
                   })
                   .optional(),
               }),
@@ -794,6 +795,7 @@ app.post(
     "json",
     z.object({
       configData: getLatestConfigVersionSchema().shape.configData,
+      config: z.record(z.string(), z.unknown()).optional(),
       localVersion: versionSchema.optional(),
       commitMessage: commitMessageSchema.optional(),
     }),
@@ -818,6 +820,7 @@ app.post(
         projectId: project.id,
         organizationId: organization.id,
         commitMessage: data.commitMessage,
+        config: data.config,
       });
 
       const response: any = {

@@ -326,8 +326,8 @@ describe("pushPrompts", () => {
             model: "openai/gpt-4o",
             prompt: "remote",
             messages: [],
-            config: { remote: true },
           },
+          remoteConfig: { remote: true },
         },
       });
 
