@@ -3033,7 +3033,7 @@
       "post": {
         "operationId": "createApiKey",
         "summary": "Create an API key",
-        "description": "Create a new API key. For service keys, pass keyType:\"service\". Optionally scope to specific projects via projectIds (ADMIN on each). Omit projectIds for full org access. The plaintext token is returned once \u2014 store it securely.",
+        "description": "Create a new API key. For service keys, pass keyType:\"service\". Optionally scope to specific projects via projectIds (ADMIN on each). Omit projectIds for full org access. The plaintext token is returned once — store it securely.",
         "security": [
           {
             "admin_api_key": []
@@ -3128,7 +3128,7 @@
         },
         "responses": {
           "201": {
-            "description": "API key created. The token field contains the plaintext key \u2014 it is only shown once.",
+            "description": "API key created. The token field contains the plaintext key — it is only shown once.",
             "content": {
               "application/json": {
                 "schema": {
@@ -3136,7 +3136,7 @@
                   "properties": {
                     "token": {
                       "type": "string",
-                      "description": "Plaintext API key token (sk-lw-...). Store securely \u2014 shown only once."
+                      "description": "Plaintext API key token (sk-lw-...). Store securely — shown only once."
                     },
                     "apiKey": {
                       "type": "object",
@@ -5477,7 +5477,7 @@
         ],
         "parameters": [],
         "summary": "List budgets applicable to the project",
-        "description": "Returns every budget that could apply to requests routed through this project \u2014 org, team, and project scope. VK and principal-scoped budgets are returned via their detail pages."
+        "description": "Returns every budget that could apply to requests routed through this project — org, team, and project scope. VK and principal-scoped budgets are returned via their detail pages."
       },
       "post": {
         "responses": {
@@ -5851,7 +5851,7 @@
           }
         ],
         "summary": "Update budget",
-        "description": "Partial update \u2014 scope and window are immutable after create. Use explicit null to clear timezone / description."
+        "description": "Partial update — scope and window are immutable after create. Use explicit null to clear timezone / description."
       },
       "delete": {
         "responses": {
@@ -6035,7 +6035,7 @@
           }
         ],
         "summary": "Archive budget",
-        "description": "Soft-delete \u2014 the row is marked archived and no longer counted by the budget engine. Historical ledger entries are retained."
+        "description": "Soft-delete — the row is marked archived and no longer counted by the budget engine. Historical ledger entries are retained."
       }
     },
     "/api/gateway/v1/cache-rules": {
@@ -7062,7 +7062,7 @@
           }
         ],
         "summary": "Archive a cache rule",
-        "description": "Soft-delete \u2014 sets archivedAt. The rule stops matching new requests. Audit log retains before/after snapshots. Returns the archived row."
+        "description": "Soft-delete — sets archivedAt. The rule stops matching new requests. Audit log retains before/after snapshots. Returns the archived row."
       }
     },
     "/api/gateway/v1/providers": {
@@ -8021,7 +8021,7 @@
         ],
         "parameters": [],
         "summary": "Create virtual key",
-        "description": "Mints a new virtual key and returns the secret exactly once. The caller MUST persist the `secret` value \u2014 LangWatch stores only a hash."
+        "description": "Mints a new virtual key and returns the secret exactly once. The caller MUST persist the `secret` value — LangWatch stores only a hash."
       }
     },
     "/api/gateway/v1/virtual-keys/{id}": {
@@ -8449,7 +8449,7 @@
           }
         ],
         "summary": "Update virtual key",
-        "description": "Partial update \u2014 send only the fields you want to change. `provider_credential_ids` replaces the entire fallback chain. `config` is deep-merged."
+        "description": "Partial update — send only the fields you want to change. `provider_credential_ids` replaces the entire fallback chain. `config` is deep-merged."
       }
     },
     "/api/gateway/v1/virtual-keys/{id}/revoke": {
@@ -12161,7 +12161,7 @@
                       "properties": {
                         "serviceApiKey": {
                           "type": "string",
-                          "description": "Scoped service API key with ADMIN on this project (sk-lw-..._...). Store securely \u2014 shown only once."
+                          "description": "Scoped service API key with ADMIN on this project (sk-lw-..._...). Store securely — shown only once."
                         },
                         "serviceApiKeyId": {
                           "type": "string",
@@ -12180,14 +12180,14 @@
           "401": {
             "description": "Invalid or missing API key token"
           },
+          "403": {
+            "description": "Insufficient permissions (requires project:create)"
+          },
           "409": {
             "description": "A project with this name already exists in the team"
           },
           "422": {
             "description": "Validation error (missing required fields)"
-          },
-          "403": {
-            "description": "Insufficient permissions (requires project:create)"
           }
         }
       }
@@ -12227,11 +12227,11 @@
           "401": {
             "description": "Invalid or missing API key token"
           },
-          "404": {
-            "description": "Project not found"
-          },
           "403": {
             "description": "Insufficient permissions for this operation"
+          },
+          "404": {
+            "description": "Project not found"
           }
         }
       },
@@ -12300,11 +12300,11 @@
           "401": {
             "description": "Invalid or missing API key token"
           },
-          "404": {
-            "description": "Project not found"
-          },
           "403": {
             "description": "Insufficient permissions (requires project:update)"
+          },
+          "404": {
+            "description": "Project not found"
           }
         }
       },
@@ -12354,11 +12354,11 @@
           "401": {
             "description": "Invalid or missing API key token"
           },
-          "404": {
-            "description": "Project not found"
-          },
           "403": {
             "description": "Insufficient permissions (requires project:delete)"
+          },
+          "404": {
+            "description": "Project not found"
           }
         }
       }
@@ -12795,6 +12795,11 @@
                           ]
                         },
                         "default": []
+                      },
+                      "config": {
+                        "type": "object",
+                        "additionalProperties": {},
+                        "default": {}
                       }
                     },
                     "required": [
@@ -12813,7 +12818,8 @@
                       "inputs",
                       "outputs",
                       "model",
-                      "tags"
+                      "tags",
+                      "config"
                     ]
                   }
                 }
@@ -13338,6 +13344,11 @@
                         ]
                       },
                       "default": []
+                    },
+                    "config": {
+                      "type": "object",
+                      "additionalProperties": {},
+                      "default": {}
                     }
                   },
                   "required": [
@@ -13356,7 +13367,8 @@
                     "inputs",
                     "outputs",
                     "model",
-                    "tags"
+                    "tags",
+                    "config"
                   ]
                 }
               }
@@ -13613,6 +13625,10 @@
                       "type": "string",
                       "minLength": 1
                     }
+                  },
+                  "config": {
+                    "type": "object",
+                    "additionalProperties": {}
                   }
                 },
                 "required": [
@@ -14559,6 +14575,11 @@
                         ]
                       },
                       "default": []
+                    },
+                    "config": {
+                      "type": "object",
+                      "additionalProperties": {},
+                      "default": {}
                     }
                   },
                   "required": [
@@ -14577,7 +14598,8 @@
                     "inputs",
                     "outputs",
                     "model",
-                    "tags"
+                    "tags",
+                    "config"
                   ]
                 }
               }
@@ -14694,7 +14716,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "Prompt slug or shorthand. Supports three formats: (1) bare slug \u2014 \"pizza-prompt\" returns the latest version; (2) slug:tag \u2014 \"pizza-prompt:production\" returns the version pointed to by that tag; (3) slug:version \u2014 \"pizza-prompt:2\" returns that specific version number. \"slug:latest\" is equivalent to the bare slug. Cannot be combined with the tag or version query parameters.",
+            "description": "Prompt slug or shorthand. Supports three formats: (1) bare slug — \"pizza-prompt\" returns the latest version; (2) slug:tag — \"pizza-prompt:production\" returns the version pointed to by that tag; (3) slug:version — \"pizza-prompt:2\" returns that specific version number. \"slug:latest\" is equivalent to the bare slug. Cannot be combined with the tag or version query parameters.",
             "required": true,
             "schema": {
               "type": "string"
@@ -15151,6 +15173,11 @@
                         ]
                       },
                       "default": []
+                    },
+                    "config": {
+                      "type": "object",
+                      "additionalProperties": {},
+                      "default": {}
                     }
                   },
                   "required": [
@@ -15169,7 +15196,8 @@
                     "inputs",
                     "outputs",
                     "model",
-                    "tags"
+                    "tags",
+                    "config"
                   ]
                 }
               }
@@ -15444,6 +15472,10 @@
                       "type": "string",
                       "minLength": 1
                     }
+                  },
+                  "config": {
+                    "type": "object",
+                    "additionalProperties": {}
                   },
                   "scope": {
                     "type": "string",
@@ -16048,6 +16080,11 @@
                             ]
                           },
                           "default": []
+                        },
+                        "config": {
+                          "type": "object",
+                          "additionalProperties": {},
+                          "default": {}
                         }
                       },
                       "required": [
@@ -16066,7 +16103,8 @@
                         "inputs",
                         "outputs",
                         "model",
-                        "tags"
+                        "tags",
+                        "config"
                       ]
                     },
                     "conflictInfo": {
@@ -17631,6 +17669,11 @@
                           ]
                         },
                         "default": []
+                      },
+                      "config": {
+                        "type": "object",
+                        "additionalProperties": {},
+                        "default": {}
                       }
                     },
                     "required": [
@@ -17649,7 +17692,8 @@
                       "inputs",
                       "outputs",
                       "model",
-                      "tags"
+                      "tags",
+                      "config"
                     ]
                   }
                 }
@@ -18206,6 +18250,11 @@
                         ]
                       },
                       "default": []
+                    },
+                    "config": {
+                      "type": "object",
+                      "additionalProperties": {},
+                      "default": {}
                     }
                   },
                   "required": [
@@ -18224,7 +18273,8 @@
                     "inputs",
                     "outputs",
                     "model",
-                    "tags"
+                    "tags",
+                    "config"
                   ]
                 }
               }
@@ -23735,7 +23785,7 @@
             "required": true
           }
         ],
-        "description": "Trigger a suite run. Schedules scenario executions for all active scenarios \u00d7 targets \u00d7 repeatCount.",
+        "description": "Trigger a suite run. Schedules scenario executions for all active scenarios × targets × repeatCount.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -23857,7 +23907,7 @@
                       "properties": {
                         "value": {
                           "type": "string",
-                          "example": "Hey there! \ud83d\udc4b\ud83d\ude0a"
+                          "example": "Hey there! 👋😊"
                         }
                       }
                     },
@@ -24076,14 +24126,14 @@
                                     },
                                     "content": {
                                       "type": "string",
-                                      "example": "Hey there! \ud83d\udc4b\ud83d\ude0a"
+                                      "example": "Hey there! 👋😊"
                                     }
                                   }
                                 },
                                 "example": [
                                   {
                                     "role": "assistant",
-                                    "content": "Hey there! \ud83d\udc4b\ud83d\ude0a"
+                                    "content": "Hey there! 👋😊"
                                   }
                                 ]
                               }
@@ -25426,7 +25476,7 @@
             }
           },
           "409": {
-            "description": "Ambiguous trace ID prefix \u2014 the prefix matches more than one trace",
+            "description": "Ambiguous trace ID prefix — the prefix matches more than one trace",
             "content": {
               "application/json": {
                 "schema": {
@@ -25498,7 +25548,7 @@
           {
             "name": "traceId",
             "in": "path",
-            "description": "The trace ID \u2014 either the full 32-char ID or a unique prefix (\u2265 8 chars). Prefix lookup is scoped to the authenticated project.",
+            "description": "The trace ID — either the full 32-char ID or a unique prefix (≥ 8 chars). Prefix lookup is scoped to the authenticated project.",
             "required": true,
             "schema": {
               "type": "string"
