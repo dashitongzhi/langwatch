@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.28.1](https://github.com/langwatch/langwatch/compare/typescript-sdk@v0.28.0...typescript-sdk@v0.28.1) (2026-05-14)
+
+
+### Bug Fixes
+
+* **deps:** upgrade langsmith sdk security floors ([2e18927](https://github.com/langwatch/langwatch/commit/2e18927c0c1c1fdec24c2bba17e5f094e56a9deb))
+* **deps:** upgrade LangSmith SDK security floors ([#4041](https://github.com/langwatch/langwatch/issues/4041)) ([2e18927](https://github.com/langwatch/langwatch/commit/2e18927c0c1c1fdec24c2bba17e5f094e56a9deb))
+
+
+### Miscellaneous
+
+* **ci:** bump all Node-20 actions to Node-24 ([#4050](https://github.com/langwatch/langwatch/issues/4050)) ([df3b0a1](https://github.com/langwatch/langwatch/commit/df3b0a1f76744e94741c9240c4489390434b7231))
+
 ## [0.28.0](https://github.com/langwatch/langwatch/compare/typescript-sdk@v0.27.0...typescript-sdk@v0.28.0) (2026-05-13)
 
 
