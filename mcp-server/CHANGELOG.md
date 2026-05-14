@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.9.0](https://github.com/langwatch/langwatch/compare/mcp-server@v0.8.0...mcp-server@v0.9.0) (2026-05-14)
+
+
+### Features
+
+* **dev-env:** boxd Makefile + quickstart rework ([#3891](https://github.com/langwatch/langwatch/issues/3891) + [#3860](https://github.com/langwatch/langwatch/issues/3860)) ([#3901](https://github.com/langwatch/langwatch/issues/3901)) ([06e294e](https://github.com/langwatch/langwatch/commit/06e294e590b733c19147a027c432a9b68080a276))
+
+
+### Bug Fixes
+
+* **deps:** upgrade langsmith sdk security floors ([2e18927](https://github.com/langwatch/langwatch/commit/2e18927c0c1c1fdec24c2bba17e5f094e56a9deb))
+* **deps:** upgrade LangSmith SDK security floors ([#4041](https://github.com/langwatch/langwatch/issues/4041)) ([2e18927](https://github.com/langwatch/langwatch/commit/2e18927c0c1c1fdec24c2bba17e5f094e56a9deb))
+
 ## [0.8.0](https://github.com/langwatch/langwatch/compare/mcp-server@v0.7.0...mcp-server@v0.8.0) (2026-05-13)
 
 
