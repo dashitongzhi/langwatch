@@ -1,5 +1,83 @@
 # Changelog
 
+## [3.4.0](https://github.com/langwatch/langwatch/compare/langwatch@v3.3.0...langwatch@v3.4.0) (2026-05-14)
+
+
+### Features
+
+* **api-key:** unified API Keys page with service keys, audit logging, and edit permissions ([#3386](https://github.com/langwatch/langwatch/issues/3386)) ([61a306c](https://github.com/langwatch/langwatch/commit/61a306c22f86af096c2f4651810bef2a7de486d6))
+* **api:** add Projects and API Keys REST API with RBAC enforcement ([#3951](https://github.com/langwatch/langwatch/issues/3951)) ([483cec9](https://github.com/langwatch/langwatch/commit/483cec96193e7b3d839afaa7526b6461667cc838))
+* **api:** add teams REST API for admin automation ([#4056](https://github.com/langwatch/langwatch/issues/4056)) ([823b4a3](https://github.com/langwatch/langwatch/commit/823b4a388ab1552f885c5b4e2f721914bc981561))
+* **dev-env:** boxd Makefile + quickstart rework ([#3891](https://github.com/langwatch/langwatch/issues/3891) + [#3860](https://github.com/langwatch/langwatch/issues/3860)) ([#3901](https://github.com/langwatch/langwatch/issues/3901)) ([06e294e](https://github.com/langwatch/langwatch/commit/06e294e590b733c19147a027c432a9b68080a276))
+* online-evaluator loop prevention + tenant safety net (post-2026-05-11) ([#3976](https://github.com/langwatch/langwatch/issues/3976)) ([5d2cb10](https://github.com/langwatch/langwatch/commit/5d2cb10d3a31ec2a99dbf65f161c8313c683338a))
+* **ops:** per-tenant pause + bulk tenant drain (post-incident 2026-05-11) ([#3970](https://github.com/langwatch/langwatch/issues/3970)) ([fb81c04](https://github.com/langwatch/langwatch/commit/fb81c0493d7c552e7798ad9ed813a10a8cb1dc47))
+* **scenarios:** simulation_set aggregate + ArchiveSetCommand schemas (lw[#3636](https://github.com/langwatch/langwatch/issues/3636) slice) ([#3793](https://github.com/langwatch/langwatch/issues/3793)) ([db3e2fe](https://github.com/langwatch/langwatch/commit/db3e2fe9c9c1f9a2b9b3126936a919cfba5dc3c2))
+* **scenarios:** structured logging across worker boundary ([#3779](https://github.com/langwatch/langwatch/issues/3779)) ([2367130](https://github.com/langwatch/langwatch/commit/2367130114a075aeaeb9e90b0301da2562bec711))
+
+
+### Bug Fixes
+
+* **3875:** presidio typed-object inputs, synthetic-span re-triggers, malformed mappings ([#3876](https://github.com/langwatch/langwatch/issues/3876)) ([a76d6dd](https://github.com/langwatch/langwatch/commit/a76d6dda550b31db44346845bcca51a00e7ddbbb))
+* **auth:** enable accountLinking so orphan email-verified Users can sign in via SSO ([#3994](https://github.com/langwatch/langwatch/issues/3994)) ([f1cb5c8](https://github.com/langwatch/langwatch/commit/f1cb5c8e83f5d036559201aae80813d39898007b))
+* **auth:** send Slack and CIO notifications on SSO auto-add signup ([#3606](https://github.com/langwatch/langwatch/issues/3606)) ([fd6e0c1](https://github.com/langwatch/langwatch/commit/fd6e0c1b95423c366d740b4e9925e1e1264b7ea5))
+* **boxd-fork:** make boxd-golden-reset succeed end-to-end ([#3901](https://github.com/langwatch/langwatch/issues/3901) follow-up) ([#4036](https://github.com/langwatch/langwatch/issues/4036)) ([12e7a7c](https://github.com/langwatch/langwatch/commit/12e7a7c7c951868cd995c05e97a80549e03cdb26))
+* **boxd-fork:** make boxd-golden-reset succeed end-to-end after [#3901](https://github.com/langwatch/langwatch/issues/3901) ([12e7a7c](https://github.com/langwatch/langwatch/commit/12e7a7c7c951868cd995c05e97a80549e03cdb26))
+* **deps:** move top-level overrides into pnpm.overrides so they actually apply ([#3962](https://github.com/langwatch/langwatch/issues/3962)) ([9d329b5](https://github.com/langwatch/langwatch/commit/9d329b57c7cd982bc49854db23a430b107f2acd9))
+* **deps:** override axios to 1.16.0 — prototype pollution, header injection (alerts [#982](https://github.com/langwatch/langwatch/issues/982)/[#984](https://github.com/langwatch/langwatch/issues/984)/[#987](https://github.com/langwatch/langwatch/issues/987)/[#988](https://github.com/langwatch/langwatch/issues/988)) ([#3844](https://github.com/langwatch/langwatch/issues/3844)) ([be2fd83](https://github.com/langwatch/langwatch/commit/be2fd8396edd57bc08dd9b4aeeb11236eb46cc8d))
+* **deps:** override axios to 1.16.0 (prototype pollution, header injection, loopback bypass) ([be2fd83](https://github.com/langwatch/langwatch/commit/be2fd8396edd57bc08dd9b4aeeb11236eb46cc8d))
+* **deps:** override kysely to 0.28.17 — JSON-path traversal injection ([#3987](https://github.com/langwatch/langwatch/issues/3987)) ([18c8ccb](https://github.com/langwatch/langwatch/commit/18c8ccbd7eddabb8dd26ab20d7e6cea89ba6bf77))
+* **deps:** patch high-severity npm vulnerabilities (fast-xml-builder, fast-uri) ([#3928](https://github.com/langwatch/langwatch/issues/3928)) ([2eb205b](https://github.com/langwatch/langwatch/commit/2eb205ba86e1ebd4c7f078c8dba746dd9f50b919))
+* **deps:** upgrade [@opentelemetry](https://github.com/opentelemetry) packages — Prometheus exporter crash ([#3988](https://github.com/langwatch/langwatch/issues/3988)) ([4826054](https://github.com/langwatch/langwatch/commit/4826054f760a1e519233a586657f849cb11ea1b4))
+* **deps:** upgrade [@opentelemetry](https://github.com/opentelemetry) packages — Prometheus exporter crash (alerts [#1058](https://github.com/langwatch/langwatch/issues/1058)-[#1095](https://github.com/langwatch/langwatch/issues/1095)) ([4826054](https://github.com/langwatch/langwatch/commit/4826054f760a1e519233a586657f849cb11ea1b4))
+* **deps:** upgrade langsmith sdk security floors ([2e18927](https://github.com/langwatch/langwatch/commit/2e18927c0c1c1fdec24c2bba17e5f094e56a9deb))
+* **deps:** upgrade LangSmith SDK security floors ([#4041](https://github.com/langwatch/langwatch/issues/4041)) ([2e18927](https://github.com/langwatch/langwatch/commit/2e18927c0c1c1fdec24c2bba17e5f094e56a9deb))
+* **deps:** upgrade python-liquid to 2.2.0 — filesystem loader path escape ([#3986](https://github.com/langwatch/langwatch/issues/3986)) ([6c390e3](https://github.com/langwatch/langwatch/commit/6c390e301185c81afd59cd64ed7c489789b6b86c))
+* **deps:** upgrade python-liquid to 2.2.0 — filesystem loader path escape (alerts [#1066](https://github.com/langwatch/langwatch/issues/1066)-[#1068](https://github.com/langwatch/langwatch/issues/1068)) ([6c390e3](https://github.com/langwatch/langwatch/commit/6c390e301185c81afd59cd64ed7c489789b6b86c))
+* **deps:** upgrade urllib3 to 2.7.0 — decompression-bomb bypass, header forwarding ([#3985](https://github.com/langwatch/langwatch/issues/3985)) ([071cea7](https://github.com/langwatch/langwatch/commit/071cea7c0a4fb094bc6f5a911eefbdc1bb8766c4))
+* **deps:** upgrade urllib3 to 2.7.0 — decompression-bomb bypass, header forwarding (alerts [#1071](https://github.com/langwatch/langwatch/issues/1071)-[#1082](https://github.com/langwatch/langwatch/issues/1082)) ([071cea7](https://github.com/langwatch/langwatch/commit/071cea7c0a4fb094bc6f5a911eefbdc1bb8766c4))
+* **licensing:** exclude archived projects from license-limit count ([#3882](https://github.com/langwatch/langwatch/issues/3882)) ([8981125](https://github.com/langwatch/langwatch/commit/8981125b429b3fcb555a2bdb08c3623d4315c20c))
+* **licensing:** point CONTACT_SALES_URL to public demo form ([#4027](https://github.com/langwatch/langwatch/issues/4027)) ([4b885b8](https://github.com/langwatch/langwatch/commit/4b885b85b636b6916a25609e77a5a2a9f20985f4))
+* **loop-prevention:** four prod bugs caught by 2026-05-14 dogfood ([#4048](https://github.com/langwatch/langwatch/issues/4048)) ([844ac83](https://github.com/langwatch/langwatch/commit/844ac83e0cf4eecd09df8c7cdb1851c7d488ad17))
+* **parity:** add 3 feature-file scenarios for [#4036](https://github.com/langwatch/langwatch/issues/4036) bats tests ([#4040](https://github.com/langwatch/langwatch/issues/4040)) ([6e8c058](https://github.com/langwatch/langwatch/commit/6e8c058aec8389d475b218d303313275fa2d0f39))
+* prevent studio drawer from opening on node drag ([#2799](https://github.com/langwatch/langwatch/issues/2799)) ([35cc250](https://github.com/langwatch/langwatch/commit/35cc250a39929811e32046b724a02cda66ed7ca1))
+* **providers:** strip masked placeholder keys from drawer save payload (split 3 of [#3526](https://github.com/langwatch/langwatch/issues/3526)) ([#3536](https://github.com/langwatch/langwatch/issues/3536)) ([35abda9](https://github.com/langwatch/langwatch/commit/35abda994646dc59ea93db4acce2aea8d29200e0))
+* remove legacy track_events BullMQ worker + queue ([#3667](https://github.com/langwatch/langwatch/issues/3667)) ([68f49c1](https://github.com/langwatch/langwatch/commit/68f49c11abd699ac9bff07a46a9f62fa94a9dcfd))
+* **scenarios-ui:** three P1 UI regressions from the Vite migration ([#3978](https://github.com/langwatch/langwatch/issues/3978)) ([162ea92](https://github.com/langwatch/langwatch/commit/162ea9252d324dd34a702e8c115b3da757c3aa94))
+* **scenarios,nav:** repair F11 save-and-run redirect race and F12 hydration warnings ([#3700](https://github.com/langwatch/langwatch/issues/3700)) ([0b73521](https://github.com/langwatch/langwatch/commit/0b73521875104d4f23b96aef2ccf14fb66e81792))
+* **scenarios:** emit OTel span on SerializedCodeAgentAdapter timeout/error ([#3438](https://github.com/langwatch/langwatch/issues/3438)) ([#3697](https://github.com/langwatch/langwatch/issues/3697)) ([a530c1a](https://github.com/langwatch/langwatch/commit/a530c1a356e1448c641034d1ab0536cf45145f58))
+* **security:** bump protobufjs overrides to 7.5.6/8.0.2 for 28 high-severity CVEs ([#4004](https://github.com/langwatch/langwatch/issues/4004)) ([6083473](https://github.com/langwatch/langwatch/commit/608347380c28f4c691d2e415fdc096a533c41e75))
+* **security:** upgrade high-severity pip dependencies (excluding langchain-core) ([#3929](https://github.com/langwatch/langwatch/issues/3929)) ([f2d5de6](https://github.com/langwatch/langwatch/commit/f2d5de6bf619d188c46947f76812a2c3b3ecf39a))
+* **settings:** surface provider-default mismatch instead of silent no-op ([#3785](https://github.com/langwatch/langwatch/issues/3785)) ([#3852](https://github.com/langwatch/langwatch/issues/3852)) ([7e7dc45](https://github.com/langwatch/langwatch/commit/7e7dc4508199d63e9417132ef449fbcf756de902))
+* **studio-lambda:** cache + single-flight getProjectLambdaArn ([#3952](https://github.com/langwatch/langwatch/issues/3952)) ([c88b54b](https://github.com/langwatch/langwatch/commit/c88b54b710774527c8329db8661ea4e168200744))
+* **test:** correct Docker image for Redis testcontainer (boy-scout) ([#3989](https://github.com/langwatch/langwatch/issues/3989)) ([e3c64cf](https://github.com/langwatch/langwatch/commit/e3c64cf127e130fff6843f0a6f0588a187c37b59))
+* **traces-v2:** trace-explorer v2 bug bash + OR-group viz polish ([#3794](https://github.com/langwatch/langwatch/issues/3794)) ([bad5067](https://github.com/langwatch/langwatch/commit/bad5067c079ea90e156e5b25f03308406bec8f6d))
+* **traces:** fall back to org membership for trace visibility ([#4038](https://github.com/langwatch/langwatch/issues/4038)) ([6d9e09d](https://github.com/langwatch/langwatch/commit/6d9e09d1a561cf981d2c7dbe483b5f6c60f14f5d))
+* **traces:** ingest OpenInference llm.token_count.* tokens ([#4034](https://github.com/langwatch/langwatch/issues/4034)) ([80d7b08](https://github.com/langwatch/langwatch/commit/80d7b081e251a9d7d1106e9d724de10ff1ca94d3))
+* **ui:** set explicit white background on all Dialog.Content and Drawer.Content ([22dd7d7](https://github.com/langwatch/langwatch/commit/22dd7d7e4d106716402dc97260c402cf0970fd81)), closes [#3998](https://github.com/langwatch/langwatch/issues/3998)
+* **ui:** set explicit white background on all Dialog/Drawer.Content ([#3999](https://github.com/langwatch/langwatch/issues/3999)) ([22dd7d7](https://github.com/langwatch/langwatch/commit/22dd7d7e4d106716402dc97260c402cf0970fd81))
+
+
+### Miscellaneous
+
+* **deps:** bump the uv group across 1 directory with 2 updates ([#3883](https://github.com/langwatch/langwatch/issues/3883)) ([db32b36](https://github.com/langwatch/langwatch/commit/db32b360b336c36f04e77d8592b36712b0113a40))
+* **deps:** update sentry-sdk[fastapi] requirement from &lt;2,&gt;=1.45.1 to &gt;=2.58.0,&lt;3 in /langwatch_nlp ([#2084](https://github.com/langwatch/langwatch/issues/2084)) ([39ec773](https://github.com/langwatch/langwatch/commit/39ec7730ffae3e59ef399e4ba8654cfa50da8671))
+* **deps:** update sentry-sdk[fastapi] requirement in /langwatch_nlp ([39ec773](https://github.com/langwatch/langwatch/commit/39ec7730ffae3e59ef399e4ba8654cfa50da8671))
+* sync model registry (364 models) ([#3944](https://github.com/langwatch/langwatch/issues/3944)) ([ce02ebe](https://github.com/langwatch/langwatch/commit/ce02ebe4a4f80ce37ba0deeeadecfcb03886abda))
+
+
+### Documentation
+
+* **adr-019:** codify repository-service layering for project config ([#1174](https://github.com/langwatch/langwatch/issues/1174)) ([6ed3e96](https://github.com/langwatch/langwatch/commit/6ed3e96ae426963ce84d9c159a6bad645f64a7ba))
+* **evaluators:** dedupe Ragas Faithfulness row and clarify Answer Relevancy ([d8b0f23](https://github.com/langwatch/langwatch/commit/d8b0f237cfba7433c34134af466babdabd10a7e2))
+* **evaluators:** dedupe Ragas Faithfulness row, clarify Answer Relevancy ([#4033](https://github.com/langwatch/langwatch/issues/4033)) ([d8b0f23](https://github.com/langwatch/langwatch/commit/d8b0f237cfba7433c34134af466babdabd10a7e2))
+* remove legacy wording from API reference ([#4023](https://github.com/langwatch/langwatch/issues/4023)) ([f281654](https://github.com/langwatch/langwatch/commit/f2816540f3a03a6e75c014366a33b2e9a1ac7b1d))
+* remove legacy wording from projects API overview ([f281654](https://github.com/langwatch/langwatch/commit/f2816540f3a03a6e75c014366a33b2e9a1ac7b1d))
+
+
+### Code Refactoring
+
+* **ops:** model OpsScope as always-defined to stop console spam ([#3584](https://github.com/langwatch/langwatch/issues/3584)) ([#3701](https://github.com/langwatch/langwatch/issues/3701)) ([f8a6345](https://github.com/langwatch/langwatch/commit/f8a634565404ca2e675f32c74e6f95d08c5d8e7a))
+
 ## [3.3.0](https://github.com/langwatch/langwatch/compare/langwatch@v3.2.1...langwatch@v3.3.0) (2026-05-05)
 
 
